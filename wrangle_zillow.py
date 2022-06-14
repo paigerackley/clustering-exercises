@@ -1,8 +1,10 @@
 import pandas as pd
 import numpy as np
 
-import env
 import os
+from env import get_db_url
+
+
 
 ## ACQUIRE ##
 
