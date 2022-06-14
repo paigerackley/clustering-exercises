@@ -90,4 +90,3 @@ def split_zillow_data(df):
     train, validate = train_test_split(train_validate, test_size=.3, 
         random_state=123)
     return train, validate, test
-
