@@ -65,6 +65,16 @@ def get_zillow():
     
 ## Other functions ##
 
+def map_counties(df):
+    # identified counties for fips codes 
+    counties = {6037: 'los_angeles',
+                6059: 'orange',
+                6111: 'ventura'}
+    # map counties to fips codes
+    df.fips = df.fips.map(counties)
+    df.rename(columns=({ 'fips': 'county'}), inplace=True)
+    return df
+
 def overview(df):
     print('--- Shape: {}'.format(df.shape))
     print()
