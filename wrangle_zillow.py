@@ -73,6 +73,18 @@ def nulls_by_rows(df):
         df.isna().mean(axis=1).rename('percent_missing'),
     ], axis=1).value_counts().sort_index()
 
+
+def remove_columns(df, cols_to_remove): 
+    """
+    A function that takes in a list of columns to remove
+    Use this by writing 'cols_to_remove = [columns you want gone]' in notebook
+    then put df = remove_columns(df, cols_to_remove)
+    """
+    #cols_to_remove = ['heatingorsystemtypeid','parcelid','storytypeid','typeconstructiontypeid','airconditioningtypeid','propertylandusetypeid','architecturalstyletypeid','id','buildingclasstypeid','buildingqualitytypeid','decktypeid','pooltypeid10','pooltypeid2','pooltypeid7','taxamount','taxdelinquencyflag','taxdelinquencyyear','id']
+
+    df = df.drop(columns=cols_to_remove)
+    return df   
+
 def handle_missing_values(df, prop_required_column = .5, prop_required_row = .75):
     threshold = int(round(prop_required_column * len(df.index), 0))
     df.dropna(axis=1, thresh = threshold, inplace = True)
