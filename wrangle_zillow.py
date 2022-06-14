@@ -4,7 +4,7 @@ import numpy as np
 import os
 from env import get_db_url
 
-
+from sklearn.model_selection import train_test_split
 
 ## ACQUIRE ##
 
@@ -92,20 +92,24 @@ def remove_columns(df, cols_to_remove):
     return df
 
 
-def handle_missing_values(df, prop_required_column = .5, prop_required_row = .75):
-    threshold = int(round(prop_required_column * len(df.index), 0))
-    df.dropna(axis=1, thresh = threshold, inplace = True)
-    threshold = int(round(prop_requred_row * len(df.columns), 0))
-    df.dropna(axis = 0, thresh = threshold, inplace = True)
+def handle_missing_values(df, prop_required_column = .6, prop_required_row = .75):
+    threshold = int(round(prop_required_column*len(df.index),0))
+    df.dropna(axis=1, thresh=threshold, inplace=True)
+    threshold = int(round(prop_required_row*len(df.columns),0))
+    df.dropna(axis=0, thresh=threshold, inplace=True)
     return df
 
     ## SPLIT ##
 
-def split_zillow_data(df):
+def split_data(df):
+    '''
+    take in a DataFrame and return train, validate, and test DataFrames; stratify on taxvaluedollarcnt.
+    return train, validate, test DataFrames.
+    '''
 
-    train_validate, test = train_test_split(df, test_size=.2, 
-        random_state=123)
 
-    train, validate = train_test_split(train_validate, test_size=.3, 
-        random_state=123)
+    train_validate, test = train_test_split(df, test_size=.2, random_state=123, stratify = df.fips)
+    train, validate = train_test_split(train_validate, 
+                                       test_size=.3, 
+                                       random_state=123)
     return train, validate, test
