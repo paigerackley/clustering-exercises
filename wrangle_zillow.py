@@ -84,6 +84,14 @@ def overview(df):
     print('--- Column Descriptions')
     print(df.describe(include='all'))
 
+def takeout_outliers1(df):
+    #this code properly sets a data ceiling
+    df = df[(df.logerror <= 2.5) & (df.logerror >= -2.5)]
+
+    df = df[(df.logerror >= 0.03) | (df.logerror <= -0.03)]
+
+    return df
+
 def nulls_by_columns(df):
     return pd.concat([
         df.isna().sum().rename('count'),
@@ -107,6 +115,14 @@ def handle_missing_values(df, prop_required_column = .6, prop_required_row = .75
     df.dropna(axis=1, thresh=threshold, inplace=True)
     threshold = int(round(prop_required_row*len(df.columns),0))
     df.dropna(axis=0, thresh=threshold, inplace=True)
+    return df
+
+    def takeout_outliers1(df):
+    #this code properly sets a data ceiling
+    df = df[(df.logerror <= 2.5) & (df.logerror >= -2.5)]
+
+    df = df[(df.logerror >= 0.03) | (df.logerror <= -0.03)]
+
     return df
 
     ## SPLIT ##
